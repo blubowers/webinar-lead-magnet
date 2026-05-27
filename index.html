@@ -818,7 +818,7 @@
 
     <div id="questions-wrap">
 
-    <p class="questions-intro">Responde estas preguntas y te recomendamos los webinars que m&aacute;s te pueden interesar.</p>
+    <p class="questions-intro">Usaremos tus respuestas para recomendarte los webinars que m&aacute;s te pueden interesar.</p>
 
     <!-- Q1: configuración -->
     <fieldset class="q">
@@ -872,7 +872,6 @@
 
     <!-- Resultados -->
     <div class="result-wrap">
-      <p class="result-helper" id="result-helper">Responde las preguntas de arriba y te recomendamos los webinars que m&aacute;s te pueden interesar.</p>
       <div class="result-cards is-empty" id="result-cards" aria-live="polite"></div>
       <div class="cta-bar is-hidden" id="cta-bar">
         <button class="cta-btn" id="cta-btn" disabled>
@@ -1173,7 +1172,7 @@
     if (webinars.length === 0) {
       container.classList.add("is-empty");
       container.innerHTML = "";
-      helper.textContent = "Responde las preguntas de arriba y te recomendamos los webinars que más te pueden interesar.";
+      helper.textContent = "";
       ctaBar.classList.add("is-hidden");
       return;
     }
