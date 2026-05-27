@@ -638,7 +638,7 @@
   .form-field.has-error input { border-color: #c0392b; }
   .form-field .field-error { font-size: var(--fs-xs); color: #c0392b; display: none; }
   .form-field.has-error .field-error { display: block; }
-  .contact-submit { width: 100%; margin-top: var(--space-2); }
+  .contact-submit { margin-top: var(--space-2); align-self: flex-start; }
 
   /* ── Intro: estado desbloqueado ── */
   .config-intro.is-unlocked h2 { font-size: clamp(1.8rem, 5vw, 2.8rem); }
@@ -1242,7 +1242,13 @@
     const fields = [
       { id: "cf-name",  ffId: "ff-name",  test: v => v.trim().length >= 2 },
       { id: "cf-email", ffId: "ff-email", test: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
-      { id: "cf-phone", ffId: "ff-phone", test: v => v.replace(/\D/g, "").length >= 7 },
+      { id: "cf-phone", ffId: "ff-phone", test: v => {
+          const digits = v.replace(/\D/g, "");
+          const country = document.getElementById("cf-country").value;
+          if (country === "+52" || country === "+1") return digits.length === 10;
+          return digits.length >= 7 && digits.length <= 15;
+        }
+      },
     ];
 
     let valid = true;
@@ -1293,6 +1299,16 @@
     document.getElementById(id).addEventListener("input", function () {
       this.closest(".form-field").classList.remove("has-error");
     });
+  });
+
+  /* Teléfono: solo dígitos, sin caracteres especiales */
+  document.getElementById("cf-phone").addEventListener("input", function () {
+    const pos = this.selectionStart;
+    const clean = this.value.replace(/\D/g, "");
+    if (this.value !== clean) {
+      this.value = clean;
+      this.setSelectionRange(Math.min(pos, clean.length), Math.min(pos, clean.length));
+    }
   });
 
   /* ── Video: clic hace scroll a las preguntas (solo mientras está bloqueado) ── */
