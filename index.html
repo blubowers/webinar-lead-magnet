@@ -842,48 +842,6 @@
 
     </div><!-- /questions-wrap -->
 
-    <!-- Video (oculto hasta que el usuario selecciona su webinar) -->
-    <div class="video-wrap" id="video-wrap">
-      <!-- Estado bloqueado: thumbnail + candado -->
-      <div id="video-locked">
-        <img
-          src="Webinar%20covers/Screenshot%202026-05-27%20at%2012.36.08.png"
-          alt="Webinar: ¡Tus dudas sobre infertilidad resueltas en un video!"
-        />
-        <div class="video-overlay">
-          <div class="lock-content">
-            <div class="lock-circle">
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M18 8h-1V6A5 5 0 0 0 7 6v2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2zm-6 9a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm3.1-9H8.9V6a3.1 3.1 0 0 1 6.2 0v2z"/>
-              </svg>
-            </div>
-            <p class="lock-text">Completa el formulario para reproducir el webinar</p>
-            <span class="lock-gift">&#x1F381;&nbsp;+ Un webinar de regalo</span>
-          </div>
-        </div>
-      </div>
-      <!-- Estado desbloqueado: Vimeo player -->
-      <div id="video-player" hidden style="padding:56.25% 0 0 0;position:relative;">
-        <iframe
-          id="vimeo-iframe"
-          src="https://player.vimeo.com/video/632979628?h=9c52356262&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
-          frameborder="0"
-          allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          style="position:absolute;top:0;left:0;width:100%;height:100%;"
-          title="Webinar Dra. Erika Salinas"
-        ></iframe>
-      </div>
-    </div>
-
-    <!-- CTA consulta: aparece 7s después de hacer play -->
-    <div id="consult-cta" hidden>
-      <div class="consult-cta">
-        <p>&#x1F381; <strong>¡Aprovecha!</strong> Obt&eacute;n una consulta gratuita con nuestros especialistas</p>
-        <a href="https://go.ingenes.com/landing?campaign=organic&amp;medium=lead_magnet&amp;landing=webinar&amp;region=general" target="_blank" rel="noopener" class="cta-btn consult-btn">Continuar &rarr;</a>
-      </div>
-    </div>
-
     <!-- Formulario de contacto (oculto hasta que se selecciona webinar) -->
     <div id="contact-form-wrap" hidden>
       <div class="contact-form-wrap">
@@ -940,6 +898,48 @@
           </div>
           <button type="submit" class="cta-btn contact-submit">Continuar &rarr;</button>
         </form>
+      </div>
+    </div>
+
+    <!-- Video (visible desde el inicio; aparece debajo del form en fase 2) -->
+    <div class="video-wrap" id="video-wrap">
+      <!-- Estado bloqueado: thumbnail + candado -->
+      <div id="video-locked">
+        <img
+          src="Webinar%20covers/Screenshot%202026-05-27%20at%2012.36.08.png"
+          alt="Webinar: ¡Tus dudas sobre infertilidad resueltas en un video!"
+        />
+        <div class="video-overlay">
+          <div class="lock-content">
+            <div class="lock-circle">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 8h-1V6A5 5 0 0 0 7 6v2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2zm-6 9a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm3.1-9H8.9V6a3.1 3.1 0 0 1 6.2 0v2z"/>
+              </svg>
+            </div>
+            <p class="lock-text">Completa el formulario para reproducir el webinar</p>
+            <span class="lock-gift">&#x1F381;&nbsp;+ Un webinar de regalo</span>
+          </div>
+        </div>
+      </div>
+      <!-- Estado desbloqueado: Vimeo player -->
+      <div id="video-player" hidden style="padding:56.25% 0 0 0;position:relative;">
+        <iframe
+          id="vimeo-iframe"
+          src="https://player.vimeo.com/video/632979628?h=9c52356262&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+          frameborder="0"
+          allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          style="position:absolute;top:0;left:0;width:100%;height:100%;"
+          title="Webinar Dra. Erika Salinas"
+        ></iframe>
+      </div>
+    </div>
+
+    <!-- CTA consulta: aparece 7s después de hacer play -->
+    <div id="consult-cta" hidden>
+      <div class="consult-cta">
+        <p>&#x1F381; <strong>¡Aprovecha!</strong> Obt&eacute;n una consulta gratuita con nuestros especialistas</p>
+        <a href="https://go.ingenes.com/landing?campaign=organic&amp;medium=lead_magnet&amp;landing=webinar&amp;region=general" target="_blank" rel="noopener" class="cta-btn consult-btn">Continuar &rarr;</a>
       </div>
     </div>
 
@@ -1242,7 +1242,7 @@
   document.getElementById("cta-btn").addEventListener("click", () => {
     document.getElementById("questions-wrap").hidden = true;
     document.getElementById("contact-form-wrap").hidden = false;
-    document.getElementById("video-wrap").scrollIntoView({ behavior: "smooth", block: "start" });
+    document.getElementById("contact-form-wrap").scrollIntoView({ behavior: "smooth", block: "start" });
   });
 
   /* ── Formulario de contacto: validar y desbloquear ── */
