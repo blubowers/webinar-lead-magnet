@@ -843,7 +843,7 @@
     </div><!-- /questions-wrap -->
 
     <!-- Video (oculto hasta que el usuario selecciona su webinar) -->
-    <div class="video-wrap" id="video-wrap" hidden>
+    <div class="video-wrap" id="video-wrap">
       <!-- Estado bloqueado: thumbnail + candado -->
       <div id="video-locked">
         <img
@@ -1238,13 +1238,11 @@
     }
   }
 
-  /* ── CTA: mostrar video bloqueado + formulario de contacto ── */
+  /* ── CTA: ocultar preguntas, mostrar formulario, scroll al video ── */
   document.getElementById("cta-btn").addEventListener("click", () => {
     document.getElementById("questions-wrap").hidden = true;
-    const videoWrap = document.getElementById("video-wrap");
-    videoWrap.hidden = false;
     document.getElementById("contact-form-wrap").hidden = false;
-    videoWrap.scrollIntoView({ behavior: "smooth", block: "start" });
+    document.getElementById("video-wrap").scrollIntoView({ behavior: "smooth", block: "start" });
   });
 
   /* ── Formulario de contacto: validar y desbloquear ── */
