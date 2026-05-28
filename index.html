@@ -894,7 +894,7 @@
               </select>
               <input type="tel" id="cf-phone" name="phone" placeholder="55 1234 5678" autocomplete="tel" />
             </div>
-            <span class="field-error">Por favor ingresa tu tel&eacute;fono.</span>
+            <span class="field-error" id="phone-error">Por favor ingresa tu tel&eacute;fono.</span>
           </div>
           <button type="submit" class="cta-btn contact-submit">Continuar &rarr;</button>
         </form>
@@ -1252,22 +1252,33 @@
     const fields = [
       { id: "cf-name",  ffId: "ff-name",  test: v => v.trim().length >= 2 },
       { id: "cf-email", ffId: "ff-email", test: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
-      { id: "cf-phone", ffId: "ff-phone", test: v => {
+      { id: "cf-phone", ffId: "ff-phone",
+        test: v => {
           const digits = v.replace(/\D/g, "");
           const country = document.getElementById("cf-country").value;
           if (country === "+52" || country === "+1") return digits.length === 10;
           return digits.length >= 7 && digits.length <= 15;
+        },
+        msg: v => {
+          const digits = v.replace(/\D/g, "");
+          const country = document.getElementById("cf-country").value;
+          if (digits.length === 0) return "Ingresa tu número de teléfono.";
+          if (country === "+52" || country === "+1") return "Ingresa un número de 10 dígitos.";
+          return "Ingresa entre 7 y 15 dígitos.";
         }
       },
     ];
 
     let valid = true;
-    fields.forEach(({ id, ffId, test }) => {
+    fields.forEach(({ id, ffId, test, msg }) => {
       const input = document.getElementById(id);
       const ff    = document.getElementById(ffId);
       const ok    = test(input.value);
       ff.classList.toggle("has-error", !ok);
-      if (!ok) valid = false;
+      if (!ok) {
+        valid = false;
+        if (msg) ff.querySelector(".field-error").textContent = msg(input.value);
+      }
     });
     if (!valid) return;
 
@@ -1304,20 +1315,30 @@
     document.querySelector(".configurator").scrollIntoView({ behavior: "smooth", block: "start" });
   });
 
-  /* Limpiar errores del formulario al escribir */
-  ["cf-name", "cf-email", "cf-phone"].forEach(id => {
+  /* Limpiar errores al escribir (nombre y correo) */
+  ["cf-name", "cf-email"].forEach(id => {
     document.getElementById(id).addEventListener("input", function () {
       this.closest(".form-field").classList.remove("has-error");
     });
   });
 
-  /* Teléfono: solo dígitos, sin caracteres especiales */
+  /* Teléfono: strip de caracteres no-numéricos + alertas coherentes */
   document.getElementById("cf-phone").addEventListener("input", function () {
-    const pos = this.selectionStart;
-    const clean = this.value.replace(/\D/g, "");
-    if (this.value !== clean) {
+    const pos   = this.selectionStart;
+    const raw   = this.value;
+    const clean = raw.replace(/\D/g, "");
+    const ff    = document.getElementById("ff-phone");
+    const errEl = document.getElementById("phone-error");
+
+    if (raw !== clean) {
+      // Había caracteres no numéricos: los quitamos y avisamos
       this.value = clean;
       this.setSelectionRange(Math.min(pos, clean.length), Math.min(pos, clean.length));
+      errEl.textContent = "Ingresa solamente números.";
+      ff.classList.add("has-error");
+    } else {
+      // Input limpio: quitamos el error para que no moleste mientras escribe
+      ff.classList.remove("has-error");
     }
   });
 
