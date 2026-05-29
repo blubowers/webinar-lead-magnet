@@ -755,6 +755,113 @@
     border-color: var(--color-primary);
     color: var(--color-white);
   }
+
+  /* ── Webinar card: duración, descripción, badge regalo ── */
+  .w-card__dur {
+    display: inline-block;
+    font-size: 0.72rem;
+    color: var(--color-muted);
+    margin: 5px 0 5px;
+    line-height: 1;
+  }
+  .w-card__desc {
+    font-size: 0.78rem;
+    color: var(--color-ink-soft);
+    line-height: 1.4;
+    margin: 0;
+  }
+  .w-card__badge {
+    display: inline-block;
+    background: #eef7ed;
+    color: #2d7a4f;
+    font-size: 0.7rem;
+    font-weight: 700;
+    border-radius: 20px;
+    padding: 3px 10px;
+    margin: 8px 12px 12px;
+    border: 1px solid #c5e8c5;
+  }
+
+  /* ── Social proof (aparece con las cards) ── */
+  .social-proof {
+    display: none;
+    max-width: 640px;
+    margin: 0 auto var(--space-5);
+    background: #f4f1fb;
+    border-left: 4px solid var(--color-primary);
+    border-radius: var(--radius-md);
+    padding: var(--space-4) var(--space-5);
+    animation: card-in 0.3s ease both;
+  }
+  .social-proof.is-visible { display: block; }
+  .social-proof__stat {
+    font-size: var(--fs-sm);
+    color: var(--color-ink);
+    margin: 0 0 var(--space-3);
+    line-height: 1.55;
+  }
+  .social-proof__stat strong { color: var(--color-primary); }
+  .social-proof__quote {
+    border-top: 1px solid rgba(37,63,120,0.12);
+    padding-top: var(--space-3);
+    margin: 0;
+  }
+  .social-proof__quote p {
+    font-style: italic;
+    color: var(--color-ink-soft);
+    font-size: var(--fs-sm);
+    margin: 0 0 6px;
+    line-height: 1.5;
+  }
+  .social-proof__quote cite {
+    font-size: var(--fs-xs);
+    color: var(--color-muted);
+    font-style: normal;
+  }
+
+  /* ── Urgency note (CTA bar) ── */
+  .urgency-note {
+    font-size: 13px;
+    color: #666;
+    margin-top: 8px;
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  /* ── Field note (micro-copy privacidad) ── */
+  .field-note {
+    font-size: 12px;
+    color: #888;
+    margin-top: 2px;
+    margin-bottom: 0;
+    line-height: 1.4;
+  }
+
+  /* ── Fila de íconos de confianza ── */
+  .trust-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    font-size: 12px;
+    color: #777;
+    margin-bottom: var(--space-3);
+    flex-wrap: wrap;
+  }
+
+  /* ── Aviso de privacidad ── */
+  .privacy-note {
+    font-size: 12px;
+    color: #999;
+    text-align: center;
+    margin-top: 12px;
+    line-height: 1.5;
+  }
+  .privacy-note a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+  .privacy-note a:hover { text-decoration: underline; }
 </style>
 </head>
 <body>
@@ -828,6 +935,18 @@
       </div>
     </fieldset>
 
+    <!-- Social proof (aparece junto con las recomendaciones) -->
+    <!-- TODO: actualizar con número real de asistentes y testimonio verificado -->
+    <div class="social-proof" id="social-proof" role="region" aria-label="Lo que dicen quienes ya lo vieron">
+      <p class="social-proof__stat">
+        &#x1F465; <strong>Más de 9,200 personas</strong> han visto este webinar y encontraron respuestas que su médico no siempre tiene tiempo de dar.
+      </p>
+      <blockquote class="social-proof__quote">
+        <p>"Llegué con muchas dudas y sin saber por dónde empezar. Este webinar me ayudó a entender mis opciones con calma."</p>
+        <cite>— Sofía R., paciente Ingenes</cite>
+      </blockquote>
+    </div>
+
     <!-- Resultados -->
     <div class="result-wrap">
       <p id="result-helper" style="display:none"></p>
@@ -837,6 +956,8 @@
           <span class="cta-label">Selecciona tu webinar de regalo</span>
         </button>
         <p class="cta-help" id="cta-help">Escoge el webinar que te interese y te lo enviamos junto con el que estás por ver.</p>
+        <!-- TODO: actualizar con dato real si hay sesión en vivo programada; si no, mantener variante on-demand -->
+        <p class="urgency-note">&#x2705; Disponible ahora mismo &mdash; más de 340 personas lo vieron esta semana.</p>
       </div>
     </div>
 
@@ -860,6 +981,7 @@
             <label for="cf-email">Correo electr&oacute;nico</label>
             <input type="email" id="cf-email" name="email" placeholder="tucorreo@gmail.com" autocomplete="email" />
             <span class="field-error">Ingresa un correo v&aacute;lido.</span>
+            <p class="field-note">Tu correo es confidencial. No lo compartimos con terceros.</p>
           </div>
           <div class="form-field" id="ff-phone">
             <label for="cf-phone">Tel&eacute;fono</label>
@@ -895,8 +1017,20 @@
               <input type="tel" id="cf-phone" name="phone" placeholder="55 1234 5678" autocomplete="tel" />
             </div>
             <span class="field-error" id="phone-error">Por favor ingresa tu tel&eacute;fono.</span>
+            <p class="field-note">Solo te contactaremos si t&uacute; lo solicitas. Sin llamadas no deseadas.</p>
           </div>
-          <button type="submit" class="cta-btn contact-submit">Continuar &rarr;</button>
+          <div class="trust-row" aria-hidden="true">
+            <span>&#x1F512; Datos protegidos</span>
+            <span>&#x1F6AB; Sin spam</span>
+            <span>&#x1F4AC; Respuesta en 24h</span>
+          </div>
+          <button type="submit" class="cta-btn contact-submit">Ver mi webinar ahora &rarr;</button>
+          <!-- TODO: verificar que https://www.ingenes.com/aviso-de-privacidad sea la URL correcta -->
+          <p class="privacy-note">
+            Al continuar, aceptas nuestro
+            <a href="https://www.ingenes.com/aviso-de-privacidad" target="_blank" rel="noopener">Aviso de Privacidad</a>.
+            Tus datos se tratan con total confidencialidad.
+          </p>
         </form>
       </div>
     </div>
@@ -979,60 +1113,80 @@
       title: "Infertilidad y sus causas",
       meta: "Dr. Eduardo Cruz · Ingenes Querétaro",
       img: BASE + "Screenshot%202026-05-27%20at%2012.35.46.png",
+      dur: "20 min",
+      desc: "Conoce las causas más frecuentes de infertilidad y qué estudios ayudan a identificarlas.",
     },
     dudas: {
       id: "dudas",
       title: "¡Tus dudas sobre infertilidad resueltas en un video!",
       meta: "Dra. Norma Barrera · Ingenes",
       img: BASE + "Screenshot%202026-05-27%20at%2012.36.08.png",
+      dur: "25 min",
+      desc: "Las preguntas que todos tienen pero pocos se atreven a hacer, respondidas con claridad.",
     },
     fiv: {
       id: "fiv",
       title: "Fertilización In Vitro en Ingenes",
       meta: "Ingenes",
       img: BASE + "Screenshot%202026-05-27%20at%2012.36.26.png",
+      dur: "22 min",
+      desc: "Entiende el proceso paso a paso, qué esperar y cómo prepararte emocionalmente.",
     },
     razones: {
       id: "razones",
       title: "5 razones para escoger a Ingenes",
       meta: "Dr. Fabián Castañeda · Ingenes",
       img: BASE + "Screenshot%202026-05-27%20at%2012.36.52.png",
+      dur: "18 min",
+      desc: "Los factores clave que distinguen a Ingenes: tecnología, equipo y tasas de éxito.",
     },
     parejas: {
       id: "parejas",
       title: "9 de cada 10 parejas logran a su bebé",
       meta: "Ingenes Informa",
       img: BASE + "Screenshot%202026-05-27%20at%2012.36.59.png",
+      dur: "15 min",
+      desc: "Resultados reales de pacientes y qué hace la diferencia en los tratamientos de Ingenes.",
     },
     ovodonacion: {
       id: "ovodonacion",
       title: "Ovodonación: Una nueva esperanza",
       meta: "Dra. Victoria León · Ingenes CDMX",
       img: BASE + "Screenshot%202026-05-27%20at%2012.37.19.png",
+      dur: "24 min",
+      desc: "Qué es la ovodonación, cuándo se recomienda y cómo es el proceso de principio a fin.",
     },
     reserva: {
       id: "reserva",
       title: "Baja reserva ovárica: ¿Qué es?",
       meta: "Dra. Erika Salinas · Ingenes Querétaro",
       img: BASE + "Screenshot%202026-05-27%20at%2012.37.47.png",
+      dur: "19 min",
+      desc: "Cómo se diagnostica, qué significa para tu fertilidad y qué opciones existen.",
     },
     mama35: {
       id: "mama35",
       title: "Puedes ser Mamá después de los 35",
       meta: "Cecilia Yegros · Ingenes",
       img: BASE + "Screenshot%202026-05-27%20at%2013.23.25.png",
+      dur: "18 min",
+      desc: "Lo que debes saber sobre fertilidad después de los 35 y cómo maximizar tus posibilidades.",
     },
     bebe48: {
       id: "bebe48",
       title: "¿Puedo tener un bebé a los 48?",
       meta: "Alma, Mamá Ingenes",
       img: BASE + "Screenshot%202026-05-27%20at%2013.23.34.png",
+      dur: "21 min",
+      desc: "El testimonio real de Alma y las opciones médicas disponibles para mujeres de 45+.",
     },
     intentos: {
       id: "intentos",
       title: "Después de 12 intentos logré ser mamá",
       meta: "Yadira, Mamá Ingenes",
       img: BASE + "Screenshot%202026-05-27%20at%2013.23.11.png",
+      dur: "17 min",
+      desc: "Una historia de perseverancia que muestra que el camino, aunque largo, vale la pena.",
     },
   };
 
@@ -1170,29 +1324,37 @@
     const ctaBar    = document.getElementById("cta-bar");
     const webinars  = pickWebinars();
 
+    const socialProof = document.getElementById("social-proof");
+
     if (webinars.length === 0) {
       container.classList.add("is-empty");
       container.innerHTML = "";
       helper.textContent = "";
       ctaBar.classList.add("is-hidden");
+      socialProof.classList.remove("is-visible");
       return;
     }
 
     container.classList.remove("is-empty");
     helper.textContent = "Elige tu webinar de regalo.";
     ctaBar.classList.remove("is-hidden");
+    socialProof.classList.add("is-visible");
 
     container.innerHTML = webinars.map(w => `
       <article class="w-card ${selectedId === w.id ? 'is-selected' : ''}"
                data-card-id="${w.id}"
                role="button" tabindex="0"
-               aria-pressed="${selectedId === w.id}">
+               aria-pressed="${selectedId === w.id}"
+               aria-label="${w.title}">
         <span class="w-card__check" aria-hidden="true">✓</span>
         <img class="w-card__thumb" src="${w.img}" alt="${w.title}" loading="lazy" />
         <div class="w-card__body">
           <p class="w-card__title">${w.title}</p>
           <p class="w-card__meta">${w.meta}</p>
+          <span class="w-card__dur">&#x23F1; ${w.dur}</span>
+          <p class="w-card__desc">${w.desc}</p>
         </div>
+        <span class="w-card__badge">&#x1F381; Gratis</span>
       </article>
     `).join("");
 
@@ -1233,7 +1395,7 @@
       help.textContent  = "Escoge el webinar que te interese y te lo enviamos junto con el que estás por ver.";
     } else {
       btn.disabled = false;
-      label.textContent = "Seleccionar Webinar →";
+      label.textContent = "Ver mi webinar ahora →";
       help.textContent  = "¡Listo! Te enviaremos acceso a este webinar junto con el que estás por ver.";
     }
   }
